@@ -1,0 +1,10 @@
+/Users/andrealu/Jerry/PushNotification/obj/Release/netstandard2.0/PushNotification.csproj.AssemblyReference.cache
+/Users/andrealu/Jerry/PushNotification/obj/Release/netstandard2.0/PushNotification.GeneratedMSBuildEditorConfig.editorconfig
+/Users/andrealu/Jerry/PushNotification/obj/Release/netstandard2.0/PushNotification.AssemblyInfoInputs.cache
+/Users/andrealu/Jerry/PushNotification/obj/Release/netstandard2.0/PushNotification.AssemblyInfo.cs
+/Users/andrealu/Jerry/PushNotification/obj/Release/netstandard2.0/PushNotification.csproj.CoreCompileInputs.cache
+/Users/andrealu/Jerry/PushNotification/bin/Release/netstandard2.0/PushNotification.deps.json
+/Users/andrealu/Jerry/PushNotification/bin/Release/netstandard2.0/PushNotification.dll
+/Users/andrealu/Jerry/PushNotification/bin/Release/netstandard2.0/PushNotification.pdb
+/Users/andrealu/Jerry/PushNotification/obj/Release/netstandard2.0/PushNotification.dll
+/Users/andrealu/Jerry/PushNotification/obj/Release/netstandard2.0/PushNotification.pdb

@@ -1,0 +1,5 @@
+is_global = true
+build_property.RootNamespace = PushNotification
+build_property.ProjectDir = /Users/andrealu/Jerry/PushNotification/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
