@@ -3031,11 +3031,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/andrealu/Jerry/PushNotification/PushNotification.csproj",
+      "projectUniqueName": "/Users/andrealu/Jerry/PushNotification/PushNotification/PushNotification.csproj",
       "projectName": "PushNotification",
-      "projectPath": "/Users/andrealu/Jerry/PushNotification/PushNotification.csproj",
+      "projectPath": "/Users/andrealu/Jerry/PushNotification/PushNotification/PushNotification.csproj",
       "packagesPath": "/Users/andrealu/.nuget/packages/",
-      "outputPath": "/Users/andrealu/Jerry/PushNotification/obj/",
+      "outputPath": "/Users/andrealu/Jerry/PushNotification/PushNotification/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/andrealu/.nuget/NuGet/NuGet.Config"
