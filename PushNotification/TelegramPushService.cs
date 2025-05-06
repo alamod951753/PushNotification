@@ -1,7 +1,10 @@
 ﻿using System;
+using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using PushNotification.Options;
 
 namespace PushNotification
 {
@@ -9,11 +12,27 @@ namespace PushNotification
     {
         private readonly string _botToken;
         private readonly string _chatId;
+        private readonly HttpClient _httpClient;
 
-        public TelegramPushService(string botToken, string chatId)
+        public TelegramPushService(string botToken, string chatId, PushOptions options = null)
         {
             _botToken = botToken;
             _chatId = chatId;
+
+            var handler = new HttpClientHandler();
+
+            // 如果有指定 Proxy，就使用
+            if (!string.IsNullOrEmpty(options?.ProxyUrl))
+            {
+                handler.Proxy = new WebProxy(options.ProxyUrl, false)
+                {
+                    BypassProxyOnLocal = options.BypassProxyOnLocal,
+                    BypassList = options.BypassList ?? Array.Empty<string>()
+                };
+                handler.UseProxy = true;
+            }
+
+            _httpClient = new HttpClient(handler);
         }
 
         /// <summary>
@@ -28,8 +47,8 @@ namespace PushNotification
             {
                 var url = $"https://api.telegram.org/bot{_botToken}/sendMessage";
 
-                var levelTag = $"[{level.ToString().ToUpper()}]";
-                var formattedMessage = $"{levelTag} {message}";
+                var levelTag = $"[ #{level.ToString().ToUpper()} ]";
+                var formattedMessage = $"{levelTag}\n{message}";
 
                 string parseMode = format == MessageFormat.Html ? "HTML" :
                                 format == MessageFormat.Markdown ? "Markdown" : null;
@@ -46,19 +65,17 @@ namespace PushNotification
 
                 var payload = new StringContent(json.ToString(), Encoding.UTF8, "application/json");
 
-                using (var httpClient = new HttpClient())
+                var response = await _httpClient.PostAsync(url, payload);
+                if (!response.IsSuccessStatusCode)
                 {
-                    var response = await httpClient.PostAsync(url, payload);
-                    return response.IsSuccessStatusCode;
-                    //if (!response.IsSuccessStatusCode)
-                    //{
-                    //    var content = await response.Content.ReadAsStringAsync();
-                    //    throw new Exception($"發送訊息失敗: {response.StatusCode}, {content}");
-                    //}
+                    LogError($"Telegram 發送失敗: {response.StatusCode} - {await response.Content.ReadAsStringAsync()}");
+                    return false;
                 }
+                return response.IsSuccessStatusCode;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                LogError($"Telegram 發送異常: {ex.Message}\n{ex.StackTrace}");
                 return false;
             }
         }
@@ -67,6 +84,13 @@ namespace PushNotification
         private static string EscapeJson(string value)
         {
             return value.Replace("\\", "\\\\").Replace("\"", "\\\"").Replace("\n", "\\n");
+        }
+
+        private void LogError(string message)
+        {
+            string logPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TelegramPushService.log");
+            string logEntry = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} - {message}\n";
+            File.AppendAllText(logPath, logEntry);
         }
     }
 }

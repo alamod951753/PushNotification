@@ -10,7 +10,7 @@ class Program
         // 傳送到 Telegram
         var pushService = new TelegramPushService("7675005108:AAFS4aWdacAy7oBm8cV2hfm96tOVS9hmGvo", "-4610441882");
         bool isSuccess = await pushService.SendMessageAsync(
-            message: "test alert",
+            message: "<b>Alert #DEC</b>\n#Problem\nTesting Alert",
             format: MessageFormat.Html,
             level: LogLevel.Info
         );
